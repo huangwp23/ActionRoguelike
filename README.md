@@ -25,9 +25,9 @@ Learn UE Game Programming
 - C++ 本地化文本示例
 
 
+[Stanford CS193u:Video Game Development in C++ and Unreal Engine](https://web.archive.org/web/20210514120659/https://www.tomlooman.com/stanford-cs193u/)
 
-
-## 第一讲 课程内容
+## 第一讲 Intro & Course Logistics
 
 这门课一共持续10周，每周3节1h的lecture+一份作业和助教的评讲。
 
@@ -48,15 +48,23 @@ Learn UE Game Programming
 
 [虚幻引擎文档：代码规范](https://docs.unrealengine.com/4.26/zh-CN/ProductionPipelines/DevelopmentSetup/CodingStandard/)
 
+[Wiki Page](https://unrealcommunity.wiki/)
+[Learning Resource Collection](https://www.tomlooman.com/unreal-engine-resources/)
 
+## 第二讲 Project Start & Version Control
 
-## 第二讲 Unreal基础
+[Project Style Guide](https://github.com/Allar/ue5-style-guide)
 
 [虚幻文件命名规范](https://github.com/Allar/ue5-style-guide)
 
 [虚幻C++部分的Gameplay框架介绍](https://www.tomlooman.com/unreal-engine-gameplay-framework/)
 
 [B站详细介绍GamPlay框架](https://www.bilibili.com/video/BV1ED4y1D7Sf/?vd_source=dcd354bbbdc6f4d8970e2af0e5dc6a7e)
+
+[Unreal's Property System](https://www.unrealengine.com/en-US/blog/unreal-property-system-reflection)
+
+[Input Binding](https://docs.unrealengine.com/en-US/InteractiveExperiences/Input/index.html)
+
 
 
 ### 虚幻引擎属性系统(反射)
@@ -97,7 +105,8 @@ UE4中实现的反射机制使得UE4能够在C++的基础上添加了这些功�
 - ./Binaries Build的输出文件夹
 
 
-## 第三讲 第三人称相机
+## 第三讲 Collision & Physics
 
 
+[Collision Filtering](https://www.unrealengine.com/en-US/blog/collision-filtering)
 

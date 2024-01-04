@@ -25,13 +25,22 @@ protected:
 	UPROPERTY(VisibleAnyWhere)
 	class UCameraComponent* CameraComp;
 
+	class USInteractionComponent* InteractionComp;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	class UAnimMontage* AttackAnim;
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
 	void PrimaryAttack();
+	void PrimaryAttack_TimeElapsed();
+	void PrimaryInteract();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> ProjectileClass;
+
+	FTimerHandle TimerHandle_PrimaryAttack;
 
 public:	
 	// Called every frame

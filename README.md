@@ -110,3 +110,9 @@ UE4中实现的反射机制使得UE4能够在C++的基础上添加了这些功�
 
 [Collision Filtering](https://www.unrealengine.com/en-US/blog/collision-filtering)
 
+
+子弹会受重力影响下坠，排查下哪里设置不对
+
+
+## 第四讲 接口和碰撞查询
+

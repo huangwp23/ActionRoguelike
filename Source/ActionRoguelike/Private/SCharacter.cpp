@@ -106,35 +106,7 @@ void ASCharacter::PrimaryAttack()
 
 void ASCharacter::PrimaryAttack_TimeElapsed()
 {
-	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-
-	const float SweepRadius = 1.0f;
-	const float SweepDistanceFallback = 9000;
-
-	FCollisionShape Shape;
-	Shape.SetSphere(SweepRadius);
-
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActor(this);
-
-	FVector TraceStart = GetPawnViewLocation();
-	FVector TraceDirection = GetControlRotation().Vector();
-	FVector TraceEnd = TraceStart + (TraceDirection * SweepDistanceFallback);
-
-	FHitResult Hit;
-	if (GetWorld()->SweepSingleByChannel(Hit, TraceStart, TraceEnd, FQuat::Identity, ECC_GameTraceChannel1, Shape, Params))
-	{
-		TraceEnd = Hit.ImpactPoint;
-	}
-
-	FRotator ProjRotation = (TraceEnd - HandLocation).Rotation();
-	FTransform SpawnTM = FTransform(ProjRotation, HandLocation);
-
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;\
-	SpawnParams.Instigator = this;
-
-	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+	SpawnProjectile(ProjectileClass);
 }
 
 void ASCharacter::PrimaryInteract()
@@ -152,6 +124,11 @@ void ASCharacter::SecondaryAttack()
 }
 
 void ASCharacter::SecondaryAttack_TimeElapsed()
+{
+	SpawnProjectile(ProjectileBlackHoleClass);
+}
+
+void ASCharacter::SpawnProjectile(TSubclassOf<AActor> Projectile)
 {
 
 	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
@@ -182,10 +159,16 @@ void ASCharacter::SecondaryAttack_TimeElapsed()
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn; \
 		SpawnParams.Instigator = this;
 
-	GetWorld()->SpawnActor<AActor>(ProjectileBlackHoleClass, SpawnTM, SpawnParams);
+	GetWorld()->SpawnActor<AActor>(Projectile, SpawnTM, SpawnParams);
 }
 
 void ASCharacter::Dash()
 {
+	PlayAnimMontage(AttackAnim);
+	GetWorldTimerManager().SetTimer(TimerHandle_Dash, this, &ASCharacter::Dash_TimeElapsed, 0.2f);
+}
 
+void ASCharacter::Dash_TimeElapsed()
+{
+	SpawnProjectile(DashProjectileClass);
 }

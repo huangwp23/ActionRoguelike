@@ -106,7 +106,27 @@ void ASCharacter::PrimaryAttack_TimeElapsed()
 {
 	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 
-	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+	const float SweepRadius = 1.0f;
+	const float SweepDistanceFallback = 9000;
+
+	FCollisionShape Shape;
+	Shape.SetSphere(SweepRadius);
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	FVector TraceStart = GetPawnViewLocation();
+	FVector TraceDirection = GetControlRotation().Vector();
+	FVector TraceEnd = TraceStart + (TraceDirection * SweepDistanceFallback);
+
+	FHitResult Hit;
+	if (GetWorld()->SweepSingleByChannel(Hit, TraceStart, TraceEnd, FQuat::Identity, ECC_GameTraceChannel1, Shape, Params))
+	{
+		TraceEnd = Hit.ImpactPoint;
+	}
+
+	FRotator ProjRotation = (TraceEnd - HandLocation).Rotation();
+	FTransform SpawnTM = FTransform(ProjRotation, HandLocation);
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;\

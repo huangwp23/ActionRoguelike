@@ -116,3 +116,10 @@ UE4中实现的反射机制使得UE4能够在C++的基础上添加了这些功�
 
 ## 第四讲 接口和碰撞查询
 
+## 第五讲 蓝图
+
+## 第六讲 调试+作业
+
+[Log, Printing Messages To Yourself During Runtime](https://nerivec.github.io/old-ue4-wiki/pages/logs-printing-messages-to-yourself-during-runtime.html)
+
+[Assert](https://docs.unrealengine.com/en-US/Programming/Assertions/index.html)

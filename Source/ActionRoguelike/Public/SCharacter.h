@@ -35,12 +35,18 @@ protected:
 
 	void PrimaryAttack();
 	void PrimaryAttack_TimeElapsed();
+	void SecondaryAttack();
+	void SecondaryAttack_TimeElapsed();
+	void Dash();
 	void PrimaryInteract();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> ProjectileClass;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileBlackHoleClass;
 
 	FTimerHandle TimerHandle_PrimaryAttack;
+	FTimerHandle TimerHandle_SecondaryAttack;
 
 public:	
 	// Called every frame

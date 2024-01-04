@@ -75,6 +75,8 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASCharacter::PrimaryInteract);
+	PlayerInputComponent->BindAction("SecondaryAttack", IE_Pressed, this, &ASCharacter::SecondaryAttack);
+	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &ASCharacter::Dash);
 }
 
 void ASCharacter::MoveForward(float Value)
@@ -141,4 +143,49 @@ void ASCharacter::PrimaryInteract()
 	{
 		InteractionComp->PrimaryInteract();
 	}
+}
+
+void ASCharacter::SecondaryAttack()
+{
+	PlayAnimMontage(AttackAnim);
+	GetWorldTimerManager().SetTimer(TimerHandle_SecondaryAttack, this, &ASCharacter::SecondaryAttack_TimeElapsed, 0.2f);
+}
+
+void ASCharacter::SecondaryAttack_TimeElapsed()
+{
+
+	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+
+	const float SweepRadius = 1.0f;
+	const float SweepDistanceFallback = 9000;
+
+	FCollisionShape Shape;
+	Shape.SetSphere(SweepRadius);
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	FVector TraceStart = GetPawnViewLocation();
+	FVector TraceDirection = GetControlRotation().Vector();
+	FVector TraceEnd = TraceStart + (TraceDirection * SweepDistanceFallback);
+
+	FHitResult Hit;
+	if (GetWorld()->SweepSingleByChannel(Hit, TraceStart, TraceEnd, FQuat::Identity, ECC_GameTraceChannel1, Shape, Params))
+	{
+		TraceEnd = Hit.ImpactPoint;
+	}
+
+	FRotator ProjRotation = (TraceEnd - HandLocation).Rotation();
+	FTransform SpawnTM = FTransform(ProjRotation, HandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn; \
+		SpawnParams.Instigator = this;
+
+	GetWorld()->SpawnActor<AActor>(ProjectileBlackHoleClass, SpawnTM, SpawnParams);
+}
+
+void ASCharacter::Dash()
+{
+
 }

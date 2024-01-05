@@ -8,6 +8,7 @@
 #include <GameFramework/CharacterMovementComponent.h>
 #include <DrawDebugHelpers.h>
 #include "SInteractionComponent.h"
+#include "SAttributeComponent.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
@@ -30,6 +31,8 @@ ASCharacter::ASCharacter()
 	CameraComp->SetupAttachment(SpringArmComp);
 
 	InteractionComp = CreateDefaultSubobject<USInteractionComponent>(TEXT("InteractionComp"));
+
+	AttributeComp = CreateDefaultSubobject<USAttributeComponent>(TEXT("AttributeComp"));
 }
 
 // Called when the game starts or when spawned

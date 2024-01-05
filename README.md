@@ -123,3 +123,21 @@ UE4中实现的反射机制使得UE4能够在C++的基础上添加了这些功�
 [Log, Printing Messages To Yourself During Runtime](https://nerivec.github.io/old-ue4-wiki/pages/logs-printing-messages-to-yourself-during-runtime.html)
 
 [Assert](https://docs.unrealengine.com/en-US/Programming/Assertions/index.html)
+
+
+
+## 第七讲 UMG血条
+
+[String Handling(FString, FName, FText)](https://docs.unrealengine.com/5.3/en-US/string-handling-in-unreal-engine/)
+
+
+委托
+
+## 第八讲 材质
+
+
+
+## 第九讲 音频、动画、UI
+
+
+

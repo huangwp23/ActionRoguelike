@@ -30,6 +30,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	class UAnimMontage* AttackAnim;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class USAttributeComponent* AttributeComp;
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 

@@ -82,6 +82,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASCharacter::PrimaryInteract);
 	PlayerInputComponent->BindAction("SecondaryAttack", IE_Pressed, this, &ASCharacter::BlackHoleAttack);
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &ASCharacter::Dash);
+	PlayerInputComponent->BindAction("Parry", IE_Pressed, this, &ASCharacter::Parry);
 }
 
 void ASCharacter::HealSelf(float Amount /*= 100*/)
@@ -173,6 +174,11 @@ void ASCharacter::SprintStop()
 void ASCharacter::Dash()
 {
 	ActionComp->StartActionByName(this, "Dash");
+}
+
+void ASCharacter::Parry()
+{
+	ActionComp->StartActionByName(this, "Parry");
 }
 
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta)

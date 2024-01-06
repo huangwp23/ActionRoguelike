@@ -42,6 +42,7 @@ protected:
 	void PrimaryAttack();
 	void BlackHoleAttack();
 	void Dash();
+	void Parry();
 	void PrimaryInteract();
 	void SpawnProjectile(TSubclassOf<AActor> Projectile);
 

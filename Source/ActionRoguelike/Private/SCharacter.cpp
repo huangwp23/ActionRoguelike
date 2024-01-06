@@ -9,6 +9,7 @@
 #include <DrawDebugHelpers.h>
 #include "SInteractionComponent.h"
 #include "SAttributeComponent.h"
+#include "SActionComponent.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
@@ -33,6 +34,7 @@ ASCharacter::ASCharacter()
 	InteractionComp = CreateDefaultSubobject<USInteractionComponent>(TEXT("InteractionComp"));
 
 	AttributeComp = CreateDefaultSubobject<USAttributeComponent>(TEXT("AttributeComp"));
+	ActionComp = CreateDefaultSubobject<USActionComponent>(TEXT("ActionComp"));
 }
 
 // Called when the game starts or when spawned
@@ -78,7 +80,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASCharacter::PrimaryInteract);
-	PlayerInputComponent->BindAction("SecondaryAttack", IE_Pressed, this, &ASCharacter::SecondaryAttack);
+	PlayerInputComponent->BindAction("SecondaryAttack", IE_Pressed, this, &ASCharacter::BlackHoleAttack);
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &ASCharacter::Dash);
 }
 
@@ -108,14 +110,7 @@ void ASCharacter::MoveRight(float Value)
 
 void ASCharacter::PrimaryAttack()
 {
-	PlayAnimMontage(AttackAnim);
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ASCharacter::PrimaryAttack_TimeElapsed, 0.2f);
-	AttributeComp->OnHealthChanged.AddDynamic(this, &ASCharacter::OnHealthChanged);
-}
-
-void ASCharacter::PrimaryAttack_TimeElapsed()
-{
-	SpawnProjectile(ProjectileClass);
+	ActionComp->StartActionByName(this, "PrimaryAttack");
 }
 
 void ASCharacter::PrimaryInteract()
@@ -126,15 +121,9 @@ void ASCharacter::PrimaryInteract()
 	}
 }
 
-void ASCharacter::SecondaryAttack()
+void ASCharacter::BlackHoleAttack()
 {
-	PlayAnimMontage(AttackAnim);
-	GetWorldTimerManager().SetTimer(TimerHandle_SecondaryAttack, this, &ASCharacter::SecondaryAttack_TimeElapsed, 0.2f);
-}
-
-void ASCharacter::SecondaryAttack_TimeElapsed()
-{
-	SpawnProjectile(ProjectileBlackHoleClass);
+	ActionComp->StartActionByName(this, "Blackhole");
 }
 
 void ASCharacter::SpawnProjectile(TSubclassOf<AActor> Projectile)
@@ -171,15 +160,19 @@ void ASCharacter::SpawnProjectile(TSubclassOf<AActor> Projectile)
 	GetWorld()->SpawnActor<AActor>(Projectile, SpawnTM, SpawnParams);
 }
 
-void ASCharacter::Dash()
+void ASCharacter::SprintStart()
 {
-	PlayAnimMontage(AttackAnim);
-	GetWorldTimerManager().SetTimer(TimerHandle_Dash, this, &ASCharacter::Dash_TimeElapsed, 0.2f);
+	ActionComp->StartActionByName(this, "Sprint");
 }
 
-void ASCharacter::Dash_TimeElapsed()
+void ASCharacter::SprintStop()
 {
-	SpawnProjectile(DashProjectileClass);
+	ActionComp->StopActionByName(this, "Sprint");
+}
+
+void ASCharacter::Dash()
+{
+	ActionComp->StartActionByName(this, "Dash");
 }
 
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta)

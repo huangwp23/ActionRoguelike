@@ -33,17 +33,20 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	class USAttributeComponent* AttributeComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class USActionComponent* ActionComp;
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
 	void PrimaryAttack();
-	void PrimaryAttack_TimeElapsed();
-	void SecondaryAttack();
-	void SecondaryAttack_TimeElapsed();
+	void BlackHoleAttack();
 	void Dash();
-	void Dash_TimeElapsed();
 	void PrimaryInteract();
 	void SpawnProjectile(TSubclassOf<AActor> Projectile);
+
+	void SprintStart();
+	void SprintStop();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> ProjectileClass;

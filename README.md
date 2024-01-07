@@ -1,6 +1,9 @@
 Learn UE Game Programming
 
 
+>2024年1月7日更新：由于一些内容工作中暂时用不到，所以有些模块没有花太多时间去学习。学习这个教程最初的目的是学习UE基础操作和概念，达到入门的效果，还有一个就是学习GAS，当初想要学习这篇教程是因为在[一定要用FGameplayTag](https://zhuanlan.zhihu.com/p/606273467)这篇文章中说：看完ActionRoguelike的技能实现，就大概明白了GAS的框架，... ，整体设计思路与GAS一致，是个很棒的GAS入门项目。现在GAS相关内容已经学得差不多了，所以暂停这个项目去学习UE中的GAS
+
+
 这门课程项目最终涉及的内容：
 - 第三人称角色控制
 - Action System(作者自己写的轻量化的Gameplay Ability System)
@@ -185,4 +188,6 @@ UMG略过
 
 
 ## 第十八讲 Gameplay Effects
+
+
 
